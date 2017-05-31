@@ -5,7 +5,7 @@
 
 cmake_minimum_required(VERSION 3.0)
 
-project(TFW2)
+project(TFWR)
 
 if(UNIX)
 	include(CheckCXXCompilerFlag)
@@ -69,13 +69,13 @@ set(Game_Src
 	./src/main.cpp
 	)
 
-add_executable(TFW2
+add_executable(TFWR
 	${Game_Src}
 	${ImGui_Src}
 	${ImGui_sfml_Src}
 	)
 
-target_link_libraries(TFW2 ${THOR_LIBRARY} ${SFML_LIBRARIES} ${OPENGL_gl_LIBRARY})
+target_link_libraries(TFWR ${THOR_LIBRARY} ${SFML_LIBRARIES} ${OPENGL_gl_LIBRARY})
 
 if(WIN32)
 	set_target_properties(TFW2 PROPERTIES LINK_FLAGS_RELEASE "/SUBSYSTEM:WINDOWS")
