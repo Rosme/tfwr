@@ -22,9 +22,9 @@ endif()
 
 set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake/Modules/;${CMAKE_MODULE_PATH}")
 
-find_package(SFML 2 COMPONENTS graphics window system main REQUIRED)
-find_package(THOR 2 REQUIRED)
-find_package(OpenGL REQUIRED)
+find_package(SFML 2 COMPONENTS graphics window system main)
+find_package(THOR 2)
+find_package(OpenGL)
 
 include_directories("include")
 include_directories("include/external/imgui")
@@ -46,7 +46,6 @@ endif(THOR_FOUND)
 set(ImGui_Src
 	./include/external/imgui/imgui.cpp
 	./include/external/imgui/imgui_draw.cpp
-	#./include/external/imgui/imgui_demo.cpp
 	./include/external/imgui/imconfig.h
 	./include/external/imgui/imgui.h
 	./include/external/imgui/imgui_internal.h
@@ -65,12 +64,21 @@ set(ImGui_sfml_Src
 
 source_group("ImGui SFML" FILES ${ImGui_sfml_Src})
 
+set(Game_Inc
+	./include/message_handler.hpp
+	./include/message_dispatcher.hpp
+	./include/message.hpp
+	./include/any.hpp
+	)
+
 set(Game_Src
 	./src/main.cpp
+	./src/message_dispatcher.cpp
 	)
 
 add_executable(TFWR
 	${Game_Src}
+	${Game_Inc}
 	${ImGui_Src}
 	${ImGui_sfml_Src}
 	)
@@ -78,5 +86,5 @@ add_executable(TFWR
 target_link_libraries(TFWR ${THOR_LIBRARY} ${SFML_LIBRARIES} ${OPENGL_gl_LIBRARY})
 
 if(WIN32)
-	set_target_properties(TFW2 PROPERTIES LINK_FLAGS_RELEASE "/SUBSYSTEM:WINDOWS")
+	set_target_properties(TFWR PROPERTIES LINK_FLAGS_RELEASE "/SUBSYSTEM:WINDOWS")
 endif()
