@@ -7,29 +7,16 @@ Creative Commons, 444 Castro Street, Suite 900, Mountain View, California, 94041
 
 #pragma once
 
-#include <memory>
-#include <string>
+#include "state.hpp"
 
-#include "any.hpp"
+class MainMenuState
+	: public State {
+public:
+	MainMenuState(StateStack& stateStack, Context context);
 
-namespace Core {
+	virtual void onMessage(const Core::Message& message, const std::string& key) override;
+	virtual void draw() override;
+	virtual bool update(sf::Time delta) override;
+	virtual bool handleEvent(const sf::Event& event) override;
 
-	class Message {
-	public:
-		template<class T>
-		Message(T t)
-			: m_content(t) {}
-
-		template<>
-		Message(const char* content)
-			: m_content(std::string(content)) {}
-
-		const Any& getContent() const {
-			return m_content;
-		}
-
-	private:
-		Any m_content;
-	};
-
-}
+};

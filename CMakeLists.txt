@@ -64,16 +64,38 @@ set(ImGui_sfml_Src
 
 source_group("ImGui SFML" FILES ${ImGui_sfml_Src})
 
+
+set(Game_State_Inc
+	./include/state.hpp
+	./include/app_loading_state.hpp
+	./include/main_menu_state.hpp
+	./include/state_stack.hpp
+	./include/stateids.hpp
+	)
+
+source_group("Header Files\\States" FILES ${Game_State_Inc})
+
 set(Game_Inc
 	./include/message_handler.hpp
 	./include/message_dispatcher.hpp
 	./include/message.hpp
 	./include/any.hpp
+	${Game_State_Inc}
 	)
+
+set(Game_State_Src
+	./src/state.cpp
+	./src/app_loading_state.cpp
+	./src/main_menu_state.cpp
+	./src/state_stack.cpp
+	)
+
+source_group("Source Files\\States" FILES ${Game_State_Src})
 
 set(Game_Src
 	./src/main.cpp
 	./src/message_dispatcher.cpp
+	${Game_State_Src}
 	)
 
 add_executable(TFWR

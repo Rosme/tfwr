@@ -7,29 +7,12 @@ Creative Commons, 444 Castro Street, Suite 900, Mountain View, California, 94041
 
 #pragma once
 
-#include <memory>
-#include <string>
+namespace States {
 
-#include "any.hpp"
-
-namespace Core {
-
-	class Message {
-	public:
-		template<class T>
-		Message(T t)
-			: m_content(t) {}
-
-		template<>
-		Message(const char* content)
-			: m_content(std::string(content)) {}
-
-		const Any& getContent() const {
-			return m_content;
-		}
-
-	private:
-		Any m_content;
+	enum class ID {
+		None,
+		AppLoadingState,
+		MainMenuState
 	};
 
 }

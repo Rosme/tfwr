@@ -5,31 +5,10 @@ To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-
 Creative Commons, 444 Castro Street, Suite 900, Mountain View, California, 94041, USA.
 */
 
-#pragma once
+#include "state_stack.hpp"
 
-#include <memory>
-#include <string>
+StateStack::StateStack(State::Context context)
+	: m_stack()
+	, m_factories()
+	, m_context(context) {}
 
-#include "any.hpp"
-
-namespace Core {
-
-	class Message {
-	public:
-		template<class T>
-		Message(T t)
-			: m_content(t) {}
-
-		template<>
-		Message(const char* content)
-			: m_content(std::string(content)) {}
-
-		const Any& getContent() const {
-			return m_content;
-		}
-
-	private:
-		Any m_content;
-	};
-
-}

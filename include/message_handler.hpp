@@ -7,11 +7,11 @@ Creative Commons, 444 Castro Street, Suite 900, Mountain View, California, 94041
 
 #pragma once
 
-#include "message.hpp"
-
-#include <memory>
+#include <string>
 
 namespace Core {
+
+	class Message;
 
 	class MessageHandler {
 	public:

@@ -5,31 +5,16 @@ To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-
 Creative Commons, 444 Castro Street, Suite 900, Mountain View, California, 94041, USA.
 */
 
-#pragma once
+#include "state.hpp"
 
-#include <memory>
-#include <string>
+State::Context::Context(sf::RenderWindow& window, Core::MessageDispatcher& dispatcher)
+	: window(window), dispatcher(dispatcher) {}
 
-#include "any.hpp"
+State::State(StateStack& stateStack, Context context) 
+	: m_stateStack(stateStack), m_context(context) {}
 
-namespace Core {
-
-	class Message {
-	public:
-		template<class T>
-		Message(T t)
-			: m_content(t) {}
-
-		template<>
-		Message(const char* content)
-			: m_content(std::string(content)) {}
-
-		const Any& getContent() const {
-			return m_content;
-		}
-
-	private:
-		Any m_content;
-	};
+State::~State() {
 
 }
+
+void State::onMessage(const Core::Message& message, const std::string& key) {}
