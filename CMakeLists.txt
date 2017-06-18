@@ -112,4 +112,8 @@ target_link_libraries(TFWR ${THOR_LIBRARY} ${SFML_LIBRARIES} ${OPENGL_gl_LIBRARY
 
 if(WIN32)
 	set_target_properties(TFWR PROPERTIES LINK_FLAGS_RELEASE "/SUBSYSTEM:WINDOWS")
+	add_custom_command(TARGET TFWR
+		POST_BUILD
+		COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/assets $<TARGET_FILE_DIR:TFWR>
+	)
 endif()
