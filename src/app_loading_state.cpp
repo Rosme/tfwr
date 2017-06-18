@@ -12,6 +12,7 @@ Creative Commons, 444 Castro Street, Suite 900, Mountain View, California, 94041
 
 #include <SFML/Window/Event.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
+#include <rsm/logger.hpp>
 
 AppLoadingState::AppLoadingState(StateStack& stateStack, Context context)
 	: State(stateStack, context), m_stateLoadedCount(0), STATE_COUNT(static_cast<unsigned int>(States::ID::MainMenuState)) {
@@ -23,6 +24,7 @@ AppLoadingState::AppLoadingState(StateStack& stateStack, Context context)
 
 void AppLoadingState::onMessage(const Core::Message& message, const std::string& key) {
 	if(key == "state.loaded") {
+		RSM_LOG_DEBUG(message.getContent().get<std::string>());
 		++m_stateLoadedCount;
 	}
 }

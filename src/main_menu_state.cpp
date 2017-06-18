@@ -28,5 +28,5 @@ bool MainMenuState::update(const sf::Time& delta) {
 }
 
 bool MainMenuState::handleEvent(const sf::Event& event) {
-	throw std::logic_error("The method or operation is not implemented.");
+	return true;
 }

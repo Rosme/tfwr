@@ -26,6 +26,7 @@ namespace Core {
 		MessageDispatcher& operator=(const MessageDispatcher&) = delete;
 
 		void registerHandler(const std::string& name, MessageHandler& handler);
+		void unregisterHandler(const std::string& name, MessageHandler& handler);
 
 		void pushMessage(const std::string& name, const Message& message = Message());
 		void dispatch();

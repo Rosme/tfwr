@@ -15,6 +15,17 @@ namespace Core {
 		m_handlers.emplace(std::make_pair(name, &handler));
 	}
 
+	void MessageDispatcher::unregisterHandler(const std::string& name, MessageHandler& handler) {
+		auto range = m_handlers.equal_range(name);
+		for(auto it = range.first; it != range.second;) {
+			if(it->second == &handler) {
+				it = m_handlers.erase(it);
+			} else {
+				++it;
+			}
+		}
+	}
+
 	void MessageDispatcher::pushMessage(const std::string& name, const Message& message) {
 		m_messages.emplace(std::make_pair(name, message));
 	}
