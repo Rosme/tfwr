@@ -8,8 +8,7 @@ Creative Commons, 444 Castro Street, Suite 900, Mountain View, California, 94041
 #pragma once
 
 #include "state.hpp"
-
-#include <SFML/Graphics/Text.hpp>
+#include "animatedtext.hpp"
 
 class AppLoadingState 
 	: public State {
@@ -27,5 +26,5 @@ private:
 private:
 	unsigned int m_stateLoadedCount;
 	const unsigned int STATE_COUNT;
-	sf::Text m_loadingText;
+	Gui::AnimatedText m_loadingText;
 };

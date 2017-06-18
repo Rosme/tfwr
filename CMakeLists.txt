@@ -76,6 +76,12 @@ set(Game_State_Inc
 
 source_group("Header Files\\States" FILES ${Game_State_Inc})
 
+set(Game_Gui_Inc
+	./include/animatedtext.hpp
+	)
+
+source_group("Header Files\\Gui" FILES ${Game_Gui_Inc})
+
 set(Game_Inc
 	./include/message_handler.hpp
 	./include/message_dispatcher.hpp
@@ -83,6 +89,7 @@ set(Game_Inc
 	./include/application.hpp
 	./include/resourceids.hpp
 	${Game_State_Inc}
+	${Game_Gui_Inc}
 	)
 
 set(Game_State_Src
@@ -94,11 +101,18 @@ set(Game_State_Src
 
 source_group("Source Files\\States" FILES ${Game_State_Src})
 
+set(Game_Gui_Src
+	./src/animatedtext.cpp
+	)
+
+source_group("Source Files\\Gui" FILES ${Game_Gui_Src})
+
 set(Game_Src
 	./src/main.cpp
 	./src/message_dispatcher.cpp
 	./src/application.cpp
 	${Game_State_Src}
+	${Game_Gui_Src}
 	)
 
 add_executable(TFWR

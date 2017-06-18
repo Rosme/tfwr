@@ -39,6 +39,8 @@ bool AppLoadingState::update(const sf::Time& delta) {
 		m_stateStack.pushState(States::ID::MainMenuState);
 	}
 
+	m_loadingText.animate();
+
 	return true;
 }
 
@@ -61,8 +63,11 @@ void AppLoadingState::loadResources() {
 		m_context.dispatcher.pushMessage("error.critical", exception.what());
 	}
 
-	m_loadingText.setString("Loading...");
+	m_loadingText.setAnimationType(Gui::AnimatedText::AnimationType::TextChange);
+	m_loadingText.setChangeStrings({"Loading.", "Loading..", "Loading..."});
+	m_loadingText.setAnimationDelay(sf::seconds(0.5f));
 	m_loadingText.setCharacterSize(52);
+	m_loadingText.setString("Loading");
 	const auto& windowSize = m_context.window.getSize();
 	const auto& textBounds = m_loadingText.getGlobalBounds();
 	m_loadingText.setPosition(sf::Vector2f(windowSize.x/2.f - textBounds.width/2.f, windowSize.y/2.f - textBounds.height/2.f));
