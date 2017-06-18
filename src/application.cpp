@@ -40,7 +40,7 @@ void Application::run() {
 			m_dispatcher.dispatch();
 
 			if(m_stateStack.isEmpty()) {
-				m_window.close();
+				m_dispatcher.pushMessage("game.close");
 			}
 		}
 
@@ -79,11 +79,11 @@ void Application::handleEvents() {
 		m_stateStack.handleEvents(event);
 
 		if(event.type == sf::Event::Closed) {
-			m_window.close();
+			m_dispatcher.pushMessage("game.close");
 		}
 
 		if(event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape) {
-			m_window.close();
+			m_dispatcher.pushMessage("game.close");
 		}
 	}
 }
