@@ -9,6 +9,9 @@ Creative Commons, 444 Castro Street, Suite 900, Mountain View, California, 94041
 
 #include "state.hpp"
 
+#include <SFML/Graphics/Text.hpp>
+#include <vector>
+
 class MainMenuState
 	: public State {
 public:
@@ -19,4 +22,11 @@ public:
 	virtual bool update(const sf::Time& delta) override;
 	virtual bool handleEvent(const sf::Event& event) override;
 
+private:
+	std::vector<sf::Text> m_menuTexts;
+	sf::Text m_title;
+	sf::Text m_play;
+	sf::Text m_options;
+	sf::Text m_credits;
+	sf::Text m_quit;
 };

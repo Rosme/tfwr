@@ -65,5 +65,5 @@ void AppLoadingState::loadResources() {
 	m_loadingText.setCharacterSize(52);
 	const auto& windowSize = m_context.window.getSize();
 	const auto& textBounds = m_loadingText.getGlobalBounds();
-	m_loadingText.setPosition(sf::Vector2f(windowSize.x/2 - textBounds.width/2, windowSize.y/2 - textBounds.height/2));
+	m_loadingText.setPosition(sf::Vector2f(windowSize.x/2.f - textBounds.width/2.f, windowSize.y/2.f - textBounds.height/2.f));
 }

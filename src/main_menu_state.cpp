@@ -8,9 +8,43 @@ Creative Commons, 444 Castro Street, Suite 900, Mountain View, California, 94041
 #include "main_menu_state.hpp"
 #include "message_dispatcher.hpp"
 #include "message.hpp"
+#include "resourceids.hpp"
+
+#include <SFML/Graphics/RenderWindow.hpp>
 
 MainMenuState::MainMenuState(StateStack& stateStack, Context context)
 	: State(stateStack, context) {
+	auto& windowSize = m_context.window.getSize();
+
+	for(int i = 0; i < 5; ++i) {
+		m_menuTexts.push_back(sf::Text());
+	}
+
+	m_menuTexts[0].setFont(m_context.fontHolder[Resources::FontIds::GameFont]);
+	m_menuTexts[0].setString("The Followers: Rebooted");
+	m_menuTexts[0].setCharacterSize(80);
+	auto& titleBounds = m_menuTexts[0].getGlobalBounds();
+	m_menuTexts[0].setPosition(sf::Vector2f(windowSize.x/2.f - titleBounds.width/2.f, 35.f));
+
+	m_menuTexts[1].setFont(m_context.fontHolder[Resources::FontIds::GameFont]);
+	m_menuTexts[1].setString("New Game");
+	m_menuTexts[1].setCharacterSize(35);
+	m_menuTexts[1].setPosition(sf::Vector2f(25.f, 200.f));
+
+	m_menuTexts[2].setFont(m_context.fontHolder[Resources::FontIds::GameFont]);
+	m_menuTexts[2].setString("Options");
+	m_menuTexts[2].setCharacterSize(35);
+	m_menuTexts[2].setPosition(sf::Vector2f(25.f, 250.f));
+
+	m_menuTexts[3].setFont(m_context.fontHolder[Resources::FontIds::GameFont]);
+	m_menuTexts[3].setString("Credits");
+	m_menuTexts[3].setCharacterSize(35);
+	m_menuTexts[3].setPosition(sf::Vector2f(25.f, 300.f));
+
+	m_menuTexts[4].setFont(m_context.fontHolder[Resources::FontIds::GameFont]);
+	m_menuTexts[4].setString("Exit");
+	m_menuTexts[4].setCharacterSize(35);
+	m_menuTexts[4].setPosition(sf::Vector2f(25.f, 350.f));
 
 	context.dispatcher.pushMessage("state.loaded", Core::Message("main_menu_state"));
 }
@@ -20,7 +54,9 @@ void MainMenuState::onMessage(const Core::Message& message, const std::string& k
 }
 
 void MainMenuState::draw() {
-
+	for(auto& text : m_menuTexts) {
+		m_context.window.draw(text);
+	}
 }
 
 bool MainMenuState::update(const sf::Time& delta) {
