@@ -9,7 +9,7 @@ Creative Commons, 444 Castro Street, Suite 900, Mountain View, California, 94041
 
 #include "state.hpp"
 
-#include <SFML/Graphics/RectangleShape.hpp>
+#include <SFML/Graphics/Text.hpp>
 
 class AppLoadingState 
 	: public State {
@@ -18,10 +18,14 @@ public:
 
 	virtual void onMessage(const Core::Message& message, const std::string& key) override;
 	virtual void draw() override;
-	virtual bool update(sf::Time delta) override;
+	virtual bool update(const sf::Time& delta) override;
 	virtual bool handleEvent(const sf::Event& event) override;
+
+private:
+	void loadResources();
 
 private:
 	unsigned int m_stateLoadedCount;
 	const unsigned int STATE_COUNT;
+	sf::Text m_loadingText;
 };

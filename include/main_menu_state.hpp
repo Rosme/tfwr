@@ -16,7 +16,7 @@ public:
 
 	virtual void onMessage(const Core::Message& message, const std::string& key) override;
 	virtual void draw() override;
-	virtual bool update(sf::Time delta) override;
+	virtual bool update(const sf::Time& delta) override;
 	virtual bool handleEvent(const sf::Event& event) override;
 
 };

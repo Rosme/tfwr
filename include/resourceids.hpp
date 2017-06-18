@@ -7,12 +7,10 @@ Creative Commons, 444 Castro Street, Suite 900, Mountain View, California, 94041
 
 #pragma once
 
-namespace States {
+namespace Resources {
 
-	enum class ID {
-		None = 0,
-		AppLoadingState,
-		MainMenuState
+	enum class FontIds {
+		GameFont
 	};
 
 }

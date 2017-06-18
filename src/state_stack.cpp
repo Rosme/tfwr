@@ -5,16 +5,16 @@ To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-
 Creative Commons, 444 Castro Street, Suite 900, Mountain View, California, 94041, USA.
 */
 
-#include <cassert>
-
 #include "state_stack.hpp"
+
+#include <cassert>
 
 StateStack::StateStack(State::Context context)
 	: m_stack()
 	, m_factories()
 	, m_context(context) {}
 
-void StateStack::update(sf::Time delta) {
+void StateStack::update(const sf::Time& delta) {
 	for(auto itr = m_stack.rbegin(); itr != m_stack.rend(); ++itr) {
 		if(!(*itr)->update(delta)) {
 			break;

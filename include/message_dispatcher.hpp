@@ -7,12 +7,12 @@ Creative Commons, 444 Castro Street, Suite 900, Mountain View, California, 94041
 
 #pragma once
 
+#include "message.hpp"
+
 #include <unordered_map>
 #include <string>
 #include <memory>
 #include <queue>
-
-#include "message.hpp"
 
 namespace Core {
 
@@ -27,7 +27,7 @@ namespace Core {
 
 		void registerHandler(const std::string& name, MessageHandler& handler);
 
-		void pushMessage(const std::string& name, const Message& message);
+		void pushMessage(const std::string& name, const Message& message = Message());
 		void dispatch();
 
 	private:

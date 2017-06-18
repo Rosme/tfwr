@@ -5,17 +5,20 @@ To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-
 Creative Commons, 444 Castro Street, Suite 900, Mountain View, California, 94041, USA.
 */
 
-#include <SFML/Window/Event.hpp>
-
 #include "app_loading_state.hpp"
 #include "message_dispatcher.hpp"
 #include "stateids.hpp"
 #include "state_stack.hpp"
 
+#include <SFML/Window/Event.hpp>
+#include <SFML/Graphics/RenderWindow.hpp>
+
 AppLoadingState::AppLoadingState(StateStack& stateStack, Context context)
 	: State(stateStack, context), m_stateLoadedCount(0), STATE_COUNT(static_cast<unsigned int>(States::ID::MainMenuState)) {
 
 	context.dispatcher.pushMessage("state.loaded", "App Loading State loaded");
+
+	loadResources();
 }
 
 void AppLoadingState::onMessage(const Core::Message& message, const std::string& key) {
@@ -25,9 +28,10 @@ void AppLoadingState::onMessage(const Core::Message& message, const std::string&
 }
 
 void AppLoadingState::draw() {
+	m_context.window.draw(m_loadingText);
 }
 
-bool AppLoadingState::update(sf::Time delta) {
+bool AppLoadingState::update(const sf::Time& delta) {
 	if(m_stateLoadedCount >= STATE_COUNT) {
 		m_stateStack.pop();
 		m_stateStack.pushState(States::ID::MainMenuState);
@@ -44,4 +48,19 @@ bool AppLoadingState::handleEvent(const sf::Event& event) {
 	}
 
 	return true;
+}
+
+void AppLoadingState::loadResources() {
+	try {
+		const sf::Font& gameFont = m_context.fontHolder.acquire(Resources::FontIds::GameFont, thor::Resources::fromFile<sf::Font>("fonts/TheNightCreatures.ttf"));
+
+		m_loadingText.setFont(gameFont);
+	} catch(const aurora::Exception& exception) {
+		m_context.dispatcher.pushMessage("error.critical", exception.what());
+	}
+
+	m_loadingText.setString("Loading...");
+	const auto& windowSize = m_context.window.getSize();
+	const auto& textBounds = m_loadingText.getGlobalBounds();
+	m_loadingText.setPosition(sf::Vector2f(windowSize.x/2 - textBounds.width/2, windowSize.y/2 - textBounds.height/2));
 }

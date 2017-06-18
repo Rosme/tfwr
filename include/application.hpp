@@ -7,16 +7,23 @@ Creative Commons, 444 Castro Street, Suite 900, Mountain View, California, 94041
 
 #pragma once
 
-#include <SFML/Graphics/RenderWindow.hpp>
-
 #include "message_dispatcher.hpp"
 #include "state_stack.hpp"
+#include "resourceids.hpp"
+#include "message_handler.hpp"
 
-class Application {
+#include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/Graphics/Font.hpp>
+
+class Application 
+	: public Core::MessageHandler {
 public:
 	explicit Application();
 
 	void run();
+
+
+	virtual void onMessage(const Core::Message& message, const std::string& key) override;
 
 private:
 	void registerStates();
@@ -29,4 +36,5 @@ private:
 	sf::RenderWindow m_window;
 	Core::MessageDispatcher m_dispatcher;
 	StateStack m_stateStack;
+	FontHolder m_fontHolder;
 };

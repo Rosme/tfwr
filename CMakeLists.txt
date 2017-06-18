@@ -29,6 +29,7 @@ find_package(OpenGL)
 include_directories("include")
 include_directories("include/external/imgui")
 include_directories("include/external/imgui-sfml")
+include_directories("include/external/rsm_utils/include")
 
 if(SFML_FOUND)
 	include_directories(${SFML_INCLUDE_DIR})
@@ -79,8 +80,8 @@ set(Game_Inc
 	./include/message_handler.hpp
 	./include/message_dispatcher.hpp
 	./include/message.hpp
-	./include/any.hpp
 	./include/application.hpp
+	./include/resourceids.hpp
 	${Game_State_Inc}
 	)
 

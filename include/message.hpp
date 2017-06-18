@@ -7,15 +7,16 @@ Creative Commons, 444 Castro Street, Suite 900, Mountain View, California, 94041
 
 #pragma once
 
+#include <rsm/any.hpp>
 #include <memory>
 #include <string>
-
-#include "any.hpp"
 
 namespace Core {
 
 	class Message {
 	public:
+		Message() {}
+
 		template<class T>
 		Message(T t)
 			: m_content(t) {}
@@ -24,12 +25,12 @@ namespace Core {
 		Message(const char* content)
 			: m_content(std::string(content)) {}
 
-		const Any& getContent() const {
+		const rsm::Any& getContent() const {
 			return m_content;
 		}
 
 	private:
-		Any m_content;
+		rsm::Any m_content;
 	};
 
 }

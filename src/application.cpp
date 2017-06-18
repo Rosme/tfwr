@@ -5,19 +5,22 @@ To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-
 Creative Commons, 444 Castro Street, Suite 900, Mountain View, California, 94041, USA.
 */
 
-#include <SFML/Window/Event.hpp>
-
 #include "application.hpp"
 #include "app_loading_state.hpp"
 #include "main_menu_state.hpp"
+
+#include <SFML/Window/Event.hpp>
+#include <rsm/logger.hpp>
 
 const sf::Time Application::MaximumTimePerFrame = sf::seconds(1.f / 60.f);
 
 Application::Application()
 	: m_window(sf::VideoMode(840, 680, 32), "The Followers: Rebooted")
-	, m_stateStack(State::Context(m_window, m_dispatcher)) {
-	registerStates();
+	, m_stateStack(State::Context(m_window, m_dispatcher, m_fontHolder)) {
+	m_dispatcher.registerHandler("error.critical", *this);
+	m_dispatcher.registerHandler("game.close", *this);
 
+	registerStates();
 	m_stateStack.pushState(States::ID::AppLoadingState);
 }
 
@@ -42,6 +45,20 @@ void Application::run() {
 		}
 
 		draw();
+	}
+}
+
+void Application::onMessage(const Core::Message& message, const std::string& key) {
+	if(key.find("error") != std::string::npos) {
+		if(key.find("critical") != std::string::npos) {
+			RSM_LOG_CRITICAL(message.getContent().get<std::string>());
+			m_dispatcher.pushMessage("game.close");
+		}
+	}
+	
+	if(key == "game.close") {
+		RSM_LOG_INFO("Request for closing game...Closing game and window");
+		m_window.close();
 	}
 }
 

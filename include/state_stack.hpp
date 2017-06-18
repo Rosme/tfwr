@@ -7,12 +7,12 @@ Creative Commons, 444 Castro Street, Suite 900, Mountain View, California, 94041
 
 #pragma once
 
+#include "stateids.hpp"
+#include "state.hpp"
+
 #include <functional>
 #include <vector>
 #include <unordered_map>
-
-#include "stateids.hpp"
-#include "state.hpp"
 
 class StateStack {
 public:
@@ -28,7 +28,7 @@ public:
 	template<class T>
 	void registerState(States::ID stateId);
 
-	void update(sf::Time delta);
+	void update(const sf::Time& delta);
 	void draw();
 	void handleEvents(const sf::Event& event);
 

@@ -11,6 +11,7 @@ It will basically the same game, with a few additions. The purpose of this exerc
 * [Aurora 1.0](https://github.com/Bromeon/Aurora) by Bromeon
 * [ImGui 1.50 WIP](https://github.com/ocornut/imgui) by ocornut
 * [ImGui-SFML](https://github.com/eliasdaler/imgui-sfml) by Elias Daler
+* [rsm_utils](https://github.com/Rosme/rsm_utils) by myself(Rosme)
 
 ### License
 

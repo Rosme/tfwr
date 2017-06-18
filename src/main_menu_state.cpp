@@ -6,7 +6,6 @@ Creative Commons, 444 Castro Street, Suite 900, Mountain View, California, 94041
 */
 
 #include "main_menu_state.hpp"
-
 #include "message_dispatcher.hpp"
 #include "message.hpp"
 
@@ -24,7 +23,7 @@ void MainMenuState::draw() {
 
 }
 
-bool MainMenuState::update(sf::Time delta) {
+bool MainMenuState::update(const sf::Time& delta) {
 	return true;
 }
 
