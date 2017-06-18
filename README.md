@@ -6,11 +6,11 @@ It will basically the same game, with a few additions. The purpose of this exerc
 
 ### Dependancy
 
-* SFML 2.4.2
-* Thor 2.0
-* Aurora 1.0
-* ImGui 1.50 WIP
-* ImGui-SFML by [Elias Daler](https://github.com/eliasdaler/imgui-sfml)
+* [SFML 2.4.2](https://github.com/SFML/SFML) by the SFML Team
+* [Thor 2.0](https://github.com/Bromeon/Thor) by Bromeon
+* [Aurora 1.0](https://github.com/Bromeon/Aurora) by Bromeon
+* [ImGui 1.50 WIP](https://github.com/ocornut/imgui) by ocornut
+* [ImGui-SFML](https://github.com/eliasdaler/imgui-sfml) by Elias Daler
 
 ### License
 

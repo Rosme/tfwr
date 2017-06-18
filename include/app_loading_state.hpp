@@ -22,7 +22,6 @@ public:
 	virtual bool handleEvent(const sf::Event& event) override;
 
 private:
-	sf::RectangleShape m_progressBarOver;
-	sf::RectangleShape m_progressBarUnder;
-
+	unsigned int m_stateLoadedCount;
+	const unsigned int STATE_COUNT;
 };

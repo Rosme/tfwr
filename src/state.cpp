@@ -6,12 +6,15 @@ Creative Commons, 444 Castro Street, Suite 900, Mountain View, California, 94041
 */
 
 #include "state.hpp"
+#include "message_dispatcher.hpp"
 
 State::Context::Context(sf::RenderWindow& window, Core::MessageDispatcher& dispatcher)
 	: window(window), dispatcher(dispatcher) {}
 
 State::State(StateStack& stateStack, Context context) 
-	: m_stateStack(stateStack), m_context(context) {}
+	: m_stateStack(stateStack), m_context(context) {
+	context.dispatcher.registerHandler("state.loaded", *this);
+}
 
 State::~State() {
 

@@ -80,6 +80,7 @@ set(Game_Inc
 	./include/message_dispatcher.hpp
 	./include/message.hpp
 	./include/any.hpp
+	./include/application.hpp
 	${Game_State_Inc}
 	)
 
@@ -95,6 +96,7 @@ source_group("Source Files\\States" FILES ${Game_State_Src})
 set(Game_Src
 	./src/main.cpp
 	./src/message_dispatcher.cpp
+	./src/application.cpp
 	${Game_State_Src}
 	)
 

@@ -5,45 +5,43 @@ To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-
 Creative Commons, 444 Castro Street, Suite 900, Mountain View, California, 94041, USA.
 */
 
+#include <SFML/Window/Event.hpp>
+
 #include "app_loading_state.hpp"
-
 #include "message_dispatcher.hpp"
-
-#include <iostream>
+#include "stateids.hpp"
+#include "state_stack.hpp"
 
 AppLoadingState::AppLoadingState(StateStack& stateStack, Context context)
-	: State(stateStack, context), m_progressBarUnder(sf::Vector2f(300, 40)), m_progressBarOver(sf::Vector2f(300, 40)) {
+	: State(stateStack, context), m_stateLoadedCount(0), STATE_COUNT(static_cast<unsigned int>(States::ID::MainMenuState)) {
 
-	m_progressBarUnder.setPosition(50, 50);
-	m_progressBarUnder.setFillColor(sf::Color::Red);
-	m_progressBarUnder.setOutlineColor(sf::Color::White);
-	m_progressBarUnder.setOutlineThickness(1.5f);
-
-	m_progressBarOver.setPosition(50, 50);
-	m_progressBarOver.setFillColor(sf::Color::Black);
-	m_progressBarOver.setOutlineColor(sf::Color::White);
-	/*m_progressBarOver.setOutlineThickness(1.5f);*/
-	context.dispatcher.pushMessage("stated.loaded", "App Loading State loaded");
+	context.dispatcher.pushMessage("state.loaded", "App Loading State loaded");
 }
 
 void AppLoadingState::onMessage(const Core::Message& message, const std::string& key) {
 	if(key == "state.loaded") {
-		auto c = message.getContent().get<std::string>();
-		std::cout << c;
-		auto size = m_progressBarOver.getSize();
-		m_progressBarOver.setSize(sf::Vector2f(size.x - 1, size.y));
+		++m_stateLoadedCount;
 	}
 }
 
 void AppLoadingState::draw() {
-	m_context.window.draw(m_progressBarUnder);
-	m_context.window.draw(m_progressBarOver);
 }
 
 bool AppLoadingState::update(sf::Time delta) {
+	if(m_stateLoadedCount >= STATE_COUNT) {
+		m_stateStack.pop();
+		m_stateStack.pushState(States::ID::MainMenuState);
+	}
+
 	return true;
 }
 
 bool AppLoadingState::handleEvent(const sf::Event& event) {
-	throw std::logic_error("The method or operation is not implemented.");
+	if(event.type == sf::Event::KeyPressed) {
+		if(event.key.code == sf::Keyboard::L) {
+			m_context.dispatcher.pushMessage("state.loaded", "KeyLoaded");
+		}
+	}
+
+	return true;
 }
