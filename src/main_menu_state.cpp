@@ -11,10 +11,11 @@ Creative Commons, 444 Castro Street, Suite 900, Mountain View, California, 94041
 #include "resourceids.hpp"
 
 #include <SFML/Graphics/RenderWindow.hpp>
+#include <rsm/unused.hpp>
 
 MainMenuState::MainMenuState(StateStack& stateStack, Context context)
 	: State(stateStack, context) {
-	auto& windowSize = m_context.window.getSize();
+	const auto& windowSize = m_context.window.getSize();
 
 	for(int i = 0; i < 5; ++i) {
 		m_menuTexts.push_back(Gui::AnimatedText(m_context.fontHolder[Resources::FontIds::GameFont]));
@@ -23,12 +24,12 @@ MainMenuState::MainMenuState(StateStack& stateStack, Context context)
 	m_menuTexts[0].setString("The Followers: Rebooted");
 	m_menuTexts[0].setCharacterSize(80);
 	m_menuTexts[0].setPosition(sf::Vector2f(windowSize.x/2.f, 100.f));
-	m_menuTexts[0].setAnimationType(Gui::AnimatedText::AnimationType::Waving);
+	m_menuTexts[0].setAnimationType(Gui::AnimatedText::AnimationType::Rotating);
 	m_menuTexts[0].setAnimationDelay(sf::milliseconds(75));
-	auto& titleBounds = m_menuTexts[0].getGlobalBounds();
+	const auto& titleBounds = m_menuTexts[0].getGlobalBounds();
 	m_menuTexts[0].setOrigin(sf::Vector2f(titleBounds.width/2, titleBounds.height/2));
-	m_menuTexts[0].setWavingAngleLimit(8.5f);
-	m_menuTexts[0].setWavingAngleStep(180.f);
+	m_menuTexts[0].setRotatingAngleLimit(8.5f);
+	m_menuTexts[0].setRotatingAngleStep(180.f);
 
 	m_menuTexts[1].setString("New Game");
 	m_menuTexts[1].setCharacterSize(35);
@@ -50,7 +51,8 @@ MainMenuState::MainMenuState(StateStack& stateStack, Context context)
 }
 
 void MainMenuState::onMessage(const Core::Message& message, const std::string& key) {
-	
+	RSM_UNUSED(message);
+	RSM_UNUSED(key);
 }
 
 void MainMenuState::draw() {
@@ -65,5 +67,6 @@ bool MainMenuState::update(const sf::Time& delta) {
 }
 
 bool MainMenuState::handleEvent(const sf::Event& event) {
+	RSM_UNUSED(event);
 	return true;
 }

@@ -8,8 +8,11 @@ Creative Commons, 444 Castro Street, Suite 900, Mountain View, California, 94041
 #include "application.hpp"
 
 #include <rsm/logger.hpp>
+#include <rsm/unused.hpp>
 
 int main(int argc, char* argv[]) {
+	RSM_UNUSED(argc);
+	RSM_UNUSED(argv);
 #if defined(NDEBUG)
 	rsm::Logger::setMinLoggingLevel(rsm::Logger::LoggingLevel::Warn);
 #endif

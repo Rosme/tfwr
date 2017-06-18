@@ -59,9 +59,9 @@ namespace Gui {
 
 		switch(m_animationType) {
 		case AnimationType::TextChange:
-			animateTextChange(delta);
+			animateTextChange();
 			break;
-		case AnimationType::Waving:
+		case AnimationType::Rotating:
 			animateWaving(delta);
 			break;
 		}
@@ -87,15 +87,15 @@ namespace Gui {
 		m_textChangeIndex = 0;
 	}
 
-	void AnimatedText::setWavingAngleLimit(float angle) {
+	void AnimatedText::setRotatingAngleLimit(float angle) {
 		m_angleLimit = angle;
 	}
 
-	void AnimatedText::setWavingAngleStep(float angle) {
+	void AnimatedText::setRotatingAngleStep(float angle) {
 		m_angleStep = angle;
 	}
 
-	void AnimatedText::animateTextChange(const sf::Time& delta) {
+	void AnimatedText::animateTextChange() {
 		if(m_animationTimer.isExpired()) {
 			++m_textChangeIndex;
 			if(m_textChangeIndex >= m_textChangeStrings.size()) {

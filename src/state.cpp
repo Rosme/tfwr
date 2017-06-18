@@ -19,5 +19,3 @@ State::State(StateStack& stateStack, Context context)
 State::~State() {
 	m_context.dispatcher.unregisterHandler("state.loaded", *this);
 }
-
-void State::onMessage(const Core::Message& message, const std::string& key) {}

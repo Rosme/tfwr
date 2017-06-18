@@ -21,7 +21,7 @@ namespace Gui {
 		enum class AnimationType {
 			None,
 			TextChange,
-			Waving
+			Rotating
 		};
 
 	public:
@@ -45,11 +45,11 @@ namespace Gui {
 		void clear();
 
 		//Waving function
-		void setWavingAngleLimit(float angle);
-		void setWavingAngleStep(float angle);
+		void setRotatingAngleLimit(float angle);
+		void setRotatingAngleStep(float angle);
 
 	private:
-		void animateTextChange(const sf::Time& delta);
+		void animateTextChange();
 		void animateWaving(const sf::Time& delta);
 
 	private:
@@ -65,7 +65,7 @@ namespace Gui {
 		std::vector<std::string> m_textChangeStrings;
 		unsigned int m_textChangeIndex = 0;
 
-		//Waving
+		//Rotating
 		float m_angleLimit = 0.f;
 		float m_currentAngle = 0.f;
 		float m_angleStep = 0.f;

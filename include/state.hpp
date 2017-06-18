@@ -47,8 +47,6 @@ public:
 
 	virtual ~State();
 	
-	virtual void onMessage(const Core::Message& message, const std::string& key) override;
-	
 	virtual void draw() = 0;
 	virtual bool update(const sf::Time& delta) = 0;
 	virtual bool handleEvent(const sf::Event& event) = 0;
