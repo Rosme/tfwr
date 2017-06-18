@@ -20,7 +20,8 @@ namespace Gui {
 	public:
 		enum class AnimationType {
 			None,
-			TextChange
+			TextChange,
+			Waving
 		};
 
 	public:
@@ -33,17 +34,23 @@ namespace Gui {
 		void setString(const sf::String& text);
 		void setCharacterSize(unsigned int size);
 		sf::FloatRect getGlobalBounds() const;
+		sf::FloatRect getLocalBounds() const;
 		void setAnimationType(AnimationType animationType);
-		void animate();
-		void setAnimationDelay(sf::Time delay);
+		void animate(const sf::Time& delta);
+		void setAnimationDelay(const sf::Time& delay);
 
 		//Animate Text functions
 		void setChangeStrings(const std::vector<std::string>& strings);
 		void pushChangeString(const std::string& string);
 		void clear();
 
+		//Waving function
+		void setWavingAngleLimit(float angle);
+		void setWavingAngleStep(float angle);
+
 	private:
-		void animateTextChange();
+		void animateTextChange(const sf::Time& delta);
+		void animateWaving(const sf::Time& delta);
 
 	private:
 		virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
@@ -56,7 +63,13 @@ namespace Gui {
 
 		//Text Change
 		std::vector<std::string> m_textChangeStrings;
-		unsigned int m_textChangeIndex;	
+		unsigned int m_textChangeIndex = 0;
+
+		//Waving
+		float m_angleLimit = 0.f;
+		float m_currentAngle = 0.f;
+		float m_angleStep = 0.f;
+		int m_angleDirection = 1;
 	};
 
 }

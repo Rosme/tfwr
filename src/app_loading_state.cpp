@@ -24,7 +24,6 @@ AppLoadingState::AppLoadingState(StateStack& stateStack, Context context)
 
 void AppLoadingState::onMessage(const Core::Message& message, const std::string& key) {
 	if(key == "state.loaded") {
-		RSM_LOG_DEBUG(message.getContent().get<std::string>());
 		++m_stateLoadedCount;
 	}
 }
@@ -39,7 +38,7 @@ bool AppLoadingState::update(const sf::Time& delta) {
 		m_stateStack.pushState(States::ID::MainMenuState);
 	}
 
-	m_loadingText.animate();
+	m_loadingText.animate(delta);
 
 	return true;
 }

@@ -22,8 +22,13 @@ MainMenuState::MainMenuState(StateStack& stateStack, Context context)
 
 	m_menuTexts[0].setString("The Followers: Rebooted");
 	m_menuTexts[0].setCharacterSize(80);
+	m_menuTexts[0].setPosition(sf::Vector2f(windowSize.x/2.f, 100.f));
+	m_menuTexts[0].setAnimationType(Gui::AnimatedText::AnimationType::Waving);
+	m_menuTexts[0].setAnimationDelay(sf::milliseconds(75));
 	auto& titleBounds = m_menuTexts[0].getGlobalBounds();
-	m_menuTexts[0].setPosition(sf::Vector2f(windowSize.x/2.f - titleBounds.width/2.f, 35.f));
+	m_menuTexts[0].setOrigin(sf::Vector2f(titleBounds.width/2, titleBounds.height/2));
+	m_menuTexts[0].setWavingAngleLimit(8.5f);
+	m_menuTexts[0].setWavingAngleStep(180.f);
 
 	m_menuTexts[1].setString("New Game");
 	m_menuTexts[1].setCharacterSize(35);
@@ -55,6 +60,7 @@ void MainMenuState::draw() {
 }
 
 bool MainMenuState::update(const sf::Time& delta) {
+	m_menuTexts[0].animate(delta);
 	return true;
 }
 
