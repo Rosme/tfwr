@@ -1,5 +1,5 @@
 /*
-Copyright (C) - Jean-Sébastien Fauteux 2017
+Copyright (C) - Jean-Sï¿½bastien Fauteux 2017
 This work is licensed under the Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License.
 To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-sa/3.0/ or send a letter to
 Creative Commons, 444 Castro Street, Suite 900, Mountain View, California, 94041, USA.
@@ -34,6 +34,7 @@ MainMenuState::MainMenuState(StateStack& stateStack, Context context)
 	m_menuTexts[1].setString("New Game");
 	m_menuTexts[1].setCharacterSize(35);
 	m_menuTexts[1].setPosition(sf::Vector2f(25.f, 200.f));
+	m_menuTexts[1].setAnimationType(Gui::AnimatedText::AnimationType::None);
 
 	m_menuTexts[2].setString("Options");
 	m_menuTexts[2].setCharacterSize(35);
@@ -63,6 +64,7 @@ void MainMenuState::draw() {
 
 bool MainMenuState::update(const sf::Time& delta) {
 	m_menuTexts[0].animate(delta);
+	m_menuTexts[1].animate(delta);
 	return true;
 }
 

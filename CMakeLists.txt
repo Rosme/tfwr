@@ -1,4 +1,4 @@
-# Copyright (C) - Jean-Sébastien Fauteux 2017
+# Copyright (C) - Jean-Sï¿½bastien Fauteux 2017
 # This work is licensed under the Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License. 
 # To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-sa/4.0/ or send a letter to 
 # Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
@@ -9,10 +9,13 @@ project(TFWR)
 
 if(UNIX)
 	include(CheckCXXCompilerFlag)
+	check_cxx_compiler_flag("-std=c++14" COMPILER_SUPPORTS_CXX14)
 	check_cxx_compiler_flag("-std=c++11" COMPILER_SUPPORTS_CXX11)
 	check_cxx_compiler_flag("-std=c++0x" COMPILER_SUPPORTS_CXX0X)
-	if(COMPILER_SUPPORTS_CXX11)
-		set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+	if(COMPILER_SUPPORTS_CXX14)
+		set(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} -std=c++14")
+	elseif(COMPILER_SUPPORTS_CXX11)
+		set(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} -std=c++11")
 	elseif(COMPILER_SUPPORTS_CXX0X)
 		set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
 	else()
@@ -22,7 +25,11 @@ endif()
 
 set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake/Modules/;${CMAKE_MODULE_PATH}")
 
-find_package(SFML 2 COMPONENTS graphics window system main)
+if(WIN32)
+    find_package(SFML 2 COMPONENTS graphics window system main)
+else()
+    find_package(SFML 2 COMPONENTS graphics window system)
+endif()
 find_package(THOR 2)
 find_package(OpenGL)
 
@@ -127,8 +134,11 @@ target_link_libraries(TFWR ${THOR_LIBRARY} ${SFML_LIBRARIES} ${OPENGL_gl_LIBRARY
 if(WIN32)
 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /W4 /WX")
 	set_target_properties(TFWR PROPERTIES LINK_FLAGS_RELEASE "/SUBSYSTEM:WINDOWS")
-	add_custom_command(TARGET TFWR
+else()
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Werror -Wall")
+endif()
+
+add_custom_command(TARGET TFWR
 		POST_BUILD
 		COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/assets $<TARGET_FILE_DIR:TFWR>
-	)
-endif()
+		)
