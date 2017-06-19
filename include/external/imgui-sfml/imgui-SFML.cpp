@@ -12,6 +12,7 @@
 
 #include <cstddef> // offsetof, NULL
 #include <cassert>
+#include <cmath>
 
 // Supress warnings caused by converting from uint to void* in pCmd->TextureID
 #ifdef __clang__

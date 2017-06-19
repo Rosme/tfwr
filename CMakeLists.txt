@@ -1,4 +1,4 @@
-# Copyright (C) - Jean-Sébastien Fauteux 2017
+# Copyright (C) - Jean-Sï¿½bastien Fauteux 2017
 # This work is licensed under the Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License. 
 # To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-sa/4.0/ or send a letter to 
 # Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
@@ -9,10 +9,13 @@ project(TFWR)
 
 if(UNIX)
 	include(CheckCXXCompilerFlag)
+	check_cxx_compiler_flag("-std=c++14" COMPILER_SUPPORTS_CXX14)
 	check_cxx_compiler_flag("-std=c++11" COMPILER_SUPPORTS_CXX11)
 	check_cxx_compiler_flag("-std=c++0x" COMPILER_SUPPORTS_CXX0X)
-	if(COMPILER_SUPPORTS_CXX11)
-		set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+	if(COMPILER_SUPPORTS_CXX14)
+		set(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} -std=c++14")
+	elseif(COMPILER_SUPPORTS_CXX11)
+		set(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} -std=c++11")
 	elseif(COMPILER_SUPPORTS_CXX0X)
 		set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
 	else()
@@ -22,13 +25,18 @@ endif()
 
 set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake/Modules/;${CMAKE_MODULE_PATH}")
 
-find_package(SFML 2 COMPONENTS graphics window system main REQUIRED)
-find_package(THOR 2 REQUIRED)
-find_package(OpenGL REQUIRED)
+if(WIN32)
+    find_package(SFML 2 COMPONENTS graphics window system main)
+else()
+    find_package(SFML 2 COMPONENTS graphics window system)
+endif()
+find_package(THOR 2)
+find_package(OpenGL)
 
 include_directories("include")
 include_directories("include/external/imgui")
 include_directories("include/external/imgui-sfml")
+include_directories("include/external/rsm_utils/include")
 
 if(SFML_FOUND)
 	include_directories(${SFML_INCLUDE_DIR})
@@ -46,7 +54,6 @@ endif(THOR_FOUND)
 set(ImGui_Src
 	./include/external/imgui/imgui.cpp
 	./include/external/imgui/imgui_draw.cpp
-	#./include/external/imgui/imgui_demo.cpp
 	./include/external/imgui/imconfig.h
 	./include/external/imgui/imgui.h
 	./include/external/imgui/imgui_internal.h
@@ -65,12 +72,59 @@ set(ImGui_sfml_Src
 
 source_group("ImGui SFML" FILES ${ImGui_sfml_Src})
 
+
+set(Game_State_Inc
+	./include/state.hpp
+	./include/app_loading_state.hpp
+	./include/main_menu_state.hpp
+	./include/state_stack.hpp
+	./include/stateids.hpp
+	)
+
+source_group("Header Files\\States" FILES ${Game_State_Inc})
+
+set(Game_Gui_Inc
+	./include/animatedtext.hpp
+	)
+
+source_group("Header Files\\Gui" FILES ${Game_Gui_Inc})
+
+set(Game_Inc
+	./include/message_handler.hpp
+	./include/message_dispatcher.hpp
+	./include/message.hpp
+	./include/application.hpp
+	./include/resourceids.hpp
+	${Game_State_Inc}
+	${Game_Gui_Inc}
+	)
+
+set(Game_State_Src
+	./src/state.cpp
+	./src/app_loading_state.cpp
+	./src/main_menu_state.cpp
+	./src/state_stack.cpp
+	)
+
+source_group("Source Files\\States" FILES ${Game_State_Src})
+
+set(Game_Gui_Src
+	./src/animatedtext.cpp
+	)
+
+source_group("Source Files\\Gui" FILES ${Game_Gui_Src})
+
 set(Game_Src
 	./src/main.cpp
+	./src/message_dispatcher.cpp
+	./src/application.cpp
+	${Game_State_Src}
+	${Game_Gui_Src}
 	)
 
 add_executable(TFWR
 	${Game_Src}
+	${Game_Inc}
 	${ImGui_Src}
 	${ImGui_sfml_Src}
 	)
@@ -78,5 +132,13 @@ add_executable(TFWR
 target_link_libraries(TFWR ${THOR_LIBRARY} ${SFML_LIBRARIES} ${OPENGL_gl_LIBRARY})
 
 if(WIN32)
-	set_target_properties(TFW2 PROPERTIES LINK_FLAGS_RELEASE "/SUBSYSTEM:WINDOWS")
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /W4 /WX")
+	set_target_properties(TFWR PROPERTIES LINK_FLAGS_RELEASE "/SUBSYSTEM:WINDOWS")
+else()
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Werror -Wall")
 endif()
+
+add_custom_command(TARGET TFWR
+		POST_BUILD
+		COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/assets $<TARGET_FILE_DIR:TFWR>
+		)
