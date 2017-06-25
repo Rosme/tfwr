@@ -16,7 +16,9 @@ Creative Commons, 444 Castro Street, Suite 900, Mountain View, California, 94041
 #include <rsm/unused.hpp>
 
 AppLoadingState::AppLoadingState(StateStack& stateStack, Context context)
-	: State(stateStack, context), m_stateLoadedCount(0), STATE_COUNT(static_cast<unsigned int>(States::ID::MainMenuState)) {
+	: State(stateStack, context)
+	, m_stateLoadedCount(0)
+	, STATE_COUNT(static_cast<unsigned int>(States::ID::MainMenuState)) {
 
 	context.dispatcher.pushMessage("state.loaded", "App Loading State loaded");
 

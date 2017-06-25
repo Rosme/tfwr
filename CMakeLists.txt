@@ -85,6 +85,8 @@ source_group("Header Files\\States" FILES ${Game_State_Inc})
 
 set(Game_Gui_Inc
 	./include/animatedtext.hpp
+	./include/guicomponent.hpp
+	./include/selectabletext.hpp
 	)
 
 source_group("Header Files\\Gui" FILES ${Game_Gui_Inc})
@@ -110,6 +112,8 @@ source_group("Source Files\\States" FILES ${Game_State_Src})
 
 set(Game_Gui_Src
 	./src/animatedtext.cpp
+	./src/guicomponent.cpp
+	./src/selectabletext.cpp
 	)
 
 source_group("Source Files\\Gui" FILES ${Game_Gui_Src})

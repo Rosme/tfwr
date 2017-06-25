@@ -10,7 +10,6 @@ Creative Commons, 444 Castro Street, Suite 900, Mountain View, California, 94041
 
 namespace Core {
 
-
 	void MessageDispatcher::registerHandler(const std::string& name, MessageHandler& handler) {
 		m_handlers.emplace(std::make_pair(name, &handler));
 	}

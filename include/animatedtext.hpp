@@ -7,6 +7,8 @@ Creative Commons, 444 Castro Street, Suite 900, Mountain View, California, 94041
 
 #pragma once
 
+#include "guicomponent.hpp"
+
 #include <SFML/Graphics/Text.hpp>
 #include <SFML/System/Time.hpp>
 #include <thor/Time/Timer.hpp>
@@ -15,8 +17,7 @@ Creative Commons, 444 Castro Street, Suite 900, Mountain View, California, 94041
 namespace Gui {
 
 	class AnimatedText
-		: public sf::Drawable
-		, public sf::Transformable {
+		: public Component {
 	public:
 		enum class AnimationType {
 			None,
