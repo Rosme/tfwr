@@ -20,7 +20,13 @@ namespace Core {
 
 	class MessageDispatcher {
 	public:
-		MessageDispatcher() = default;
+		enum class Type {
+			Async,
+			Sync
+		};
+
+	public:
+		MessageDispatcher(Type type = Type::Sync);
 
 		MessageDispatcher(const MessageDispatcher&) = delete;
 		MessageDispatcher& operator=(const MessageDispatcher&) = delete;
@@ -32,9 +38,36 @@ namespace Core {
 		void dispatch();
 
 	private:
-		typedef std::unordered_multimap<std::string, MessageHandler*> HandlerMap;
-		HandlerMap m_handlers;
-		std::queue<std::pair<std::string, Message>> m_messages;
+		struct Impl {
+			virtual ~Impl() = default;
+			virtual void registerHandler(const std::string& name, MessageHandler& handler) = 0;
+			virtual void unregisterHandler(const std::string& name, MessageHandler& handler) = 0;
+			virtual void pushMessage(const std::string& name, const Message& message) = 0;
+			virtual void dispatch() = 0;
+
+			typedef std::unordered_multimap<std::string, MessageHandler*> HandlerMap;
+			HandlerMap m_handlers;
+			std::queue<std::pair<std::string, Message>> m_messages;
+		};
+
+		struct AsyncImpl
+			: public Impl {
+			virtual void registerHandler(const std::string& name, MessageHandler& handler) override;
+			virtual void unregisterHandler(const std::string& name, MessageHandler& handler) override;
+			virtual void pushMessage(const std::string& name, const Message& message) override;
+			virtual void dispatch() override;
+		};
+
+		struct SyncImpl
+			: public Impl {
+			virtual void registerHandler(const std::string& name, MessageHandler& handler) override;
+			virtual void unregisterHandler(const std::string& name, MessageHandler& handler) override;
+			virtual void pushMessage(const std::string& name, const Message& message) override;
+			virtual void dispatch() override;
+		};
+
+	private:
+		std::unique_ptr<Impl> m_impl;
 	};
 
 }
