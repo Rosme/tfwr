@@ -13,6 +13,8 @@ Creative Commons, 444 Castro Street, Suite 900, Mountain View, California, 94041
 #include <string>
 #include <memory>
 #include <queue>
+#include <thread>
+#include <mutex>
 
 namespace Core {
 
@@ -36,6 +38,8 @@ namespace Core {
 
 		void pushMessage(const std::string& name, const Message& message = Message());
 		void dispatch();
+		void start();
+		void stop();
 
 	private:
 		struct Impl {
@@ -44,10 +48,13 @@ namespace Core {
 			virtual void unregisterHandler(const std::string& name, MessageHandler& handler) = 0;
 			virtual void pushMessage(const std::string& name, const Message& message) = 0;
 			virtual void dispatch() = 0;
+			virtual void start() {};
+			virtual void stop() {};
 
 			typedef std::unordered_multimap<std::string, MessageHandler*> HandlerMap;
 			HandlerMap m_handlers;
-			std::queue<std::pair<std::string, Message>> m_messages;
+			typedef std::queue<std::pair<std::string, Message>> MessageQueue;
+			MessageQueue m_messages;
 		};
 
 		struct AsyncImpl
@@ -56,6 +63,12 @@ namespace Core {
 			virtual void unregisterHandler(const std::string& name, MessageHandler& handler) override;
 			virtual void pushMessage(const std::string& name, const Message& message) override;
 			virtual void dispatch() override;
+			virtual void start() override;
+			virtual void stop() override;
+
+			std::thread m_thread;
+			std::mutex m_mutex;
+			bool m_running = false;
 		};
 
 		struct SyncImpl

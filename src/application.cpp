@@ -16,6 +16,7 @@ const sf::Time Application::MaximumTimePerFrame = sf::seconds(1.f / 60.f);
 
 Application::Application()
 	: m_window(sf::VideoMode(840, 680, 32), "The Followers: Rebooted")
+	, m_dispatcher(Core::MessageDispatcher::Type::Async)
 	, m_stateStack(State::Context(m_window, m_dispatcher, m_fontHolder)) {
 	m_dispatcher.registerHandler("error.critical", *this);
 	m_dispatcher.registerHandler("game.close", *this);
@@ -28,6 +29,9 @@ void Application::run() {
 	sf::Clock clock;
 	sf::Time timeSinceLastUpdate = sf::Time::Zero;
 
+	//m_dispatcher.dispatch();
+	m_dispatcher.start();
+
 	while(m_window.isOpen()) {
 		sf::Time delta = clock.restart();
 		timeSinceLastUpdate += delta;
@@ -37,7 +41,6 @@ void Application::run() {
 
 			handleEvents();
 			m_stateStack.update(MaximumTimePerFrame);
-			m_dispatcher.dispatch();
 
 			if(m_stateStack.isEmpty()) {
 				m_dispatcher.pushMessage("game.close");
@@ -58,6 +61,7 @@ void Application::onMessage(const Core::Message& message, const std::string& key
 	
 	if(key == "game.close") {
 		RSM_LOG_INFO("Request for closing game...Closing game and window");
+		m_dispatcher.stop();
 		m_window.close();
 	}
 }
