@@ -7,7 +7,7 @@ Creative Commons, 444 Castro Street, Suite 900, Mountain View, California, 94041
 
 #pragma once
 
-#include "guicomponent.hpp"
+#include "text.hpp"
 
 #include <SFML/Graphics/Text.hpp>
 #include <SFML/System/Time.hpp>
@@ -17,7 +17,7 @@ Creative Commons, 444 Castro Street, Suite 900, Mountain View, California, 94041
 namespace Gui {
 
 	class AnimatedText
-		: public Component {
+		: public Text {
 	public:
 		enum class AnimationType {
 			None,
@@ -31,11 +31,6 @@ namespace Gui {
 		AnimatedText(const sf::Font& font, const sf::String& text, AnimationType animationType = AnimationType::None);
 		AnimatedText(const sf::Font& font, const sf::String& text, unsigned int characterSize, AnimationType animationType = AnimationType::None);
 
-		void setFont(const sf::Font& font);
-		void setString(const sf::String& text);
-		void setCharacterSize(unsigned int size);
-		sf::FloatRect getGlobalBounds() const;
-		sf::FloatRect getLocalBounds() const;
 		void setAnimationType(AnimationType animationType);
 		void animate(const sf::Time& delta);
 		void setAnimationDelay(const sf::Time& delay);
@@ -57,7 +52,6 @@ namespace Gui {
 		virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 
 	private:
-		sf::Text m_text;
 		AnimationType m_animationType;
 		thor::Timer m_animationTimer;
 		sf::Time m_delay;

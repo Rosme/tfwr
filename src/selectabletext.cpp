@@ -11,12 +11,36 @@ Creative Commons, 444 Castro Street, Suite 900, Mountain View, California, 94041
 
 namespace Gui {
 
-	SelectableText::SelectableText(const sf::Font& font, const std::string& text) 
-		: m_text(text, font) {}
+	SelectableText::SelectableText(const sf::Font& font, const std::string& text, unsigned int characterSize)
+		: Text(font, text, characterSize) {}
+
+	void SelectableText::setCallback(Callback callback) {
+		m_callback = callback;
+	}
+
+	void SelectableText::select() {
+		Component::select();
+		m_text.setFillColor(SelectedColor);
+	}
+
+	void SelectableText::unselect() {
+		Component::unselect();
+		m_text.setFillColor(DefaultColor);
+	}
+
+	void SelectableText::activate() {
+		Component::activate();
+		
+		m_text.setFillColor(ActivationColor);
+
+		if(m_callback) {
+			m_callback();
+		}
+	}
 
 	void SelectableText::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 		states.transform *= getTransform();
-		target.draw(m_text);
+		target.draw(m_text, states);
 	}
 
 }

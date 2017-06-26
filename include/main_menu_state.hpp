@@ -8,6 +8,7 @@ Creative Commons, 444 Castro Street, Suite 900, Mountain View, California, 94041
 #pragma once
 
 #include "state.hpp"
+#include "guicomponent.hpp"
 #include "animatedtext.hpp"
 
 #include <vector>
@@ -23,5 +24,7 @@ public:
 	virtual bool handleEvent(const sf::Event& event) override;
 
 private:
-	std::vector<Gui::AnimatedText> m_menuTexts;
+	Gui::AnimatedText m_title;
+	std::vector<Gui::Component::Ptr> m_menuTexts;
+	unsigned int m_currentIndex = 0;
 };

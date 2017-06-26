@@ -28,7 +28,7 @@ namespace Gui {
 		virtual void unselect();
 
 		const bool isActive() const;
-		virtual void active();
+		virtual void activate();
 		virtual void deactivate();
 
 	private:

@@ -31,7 +31,7 @@ namespace Gui {
 		return m_isActive;
 	}
 
-	void Component::active() {
+	void Component::activate() {
 		m_isActive = true;
 	}
 

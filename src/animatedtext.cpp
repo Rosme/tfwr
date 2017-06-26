@@ -16,37 +16,16 @@ namespace Gui {
 		: m_animationType(animationType) {}
 
 	AnimatedText::AnimatedText(const sf::Font& font, AnimationType animationType)
-		: m_text("", font)
+		: Text(font,"")
 		, m_animationType(animationType) {}
 
 	AnimatedText::AnimatedText(const sf::Font& font, const sf::String& text, AnimationType animationType)
-		: m_text(text, font)
+		: Text(font, text)
 		, m_animationType(animationType) {}
 
 	AnimatedText::AnimatedText(const sf::Font& font, const sf::String& text, unsigned int characterSize, AnimationType animationType)
-		: m_text(text, font, characterSize)
+		: Text(font, text, characterSize)
 		, m_animationType(animationType) {}
-
-
-	void AnimatedText::setFont(const sf::Font& font) {
-		m_text.setFont(font);
-	}
-
-	void AnimatedText::setString(const sf::String& text) {
-		m_text.setString(text);
-	}
-
-	void AnimatedText::setCharacterSize(unsigned int size) {
-		m_text.setCharacterSize(size);
-	}
-
-	sf::FloatRect AnimatedText::getGlobalBounds() const {
-		return m_text.getGlobalBounds();
-	}
-
-	sf::FloatRect AnimatedText::getLocalBounds() const {
-		return m_text.getLocalBounds();
-	}
 
 	void AnimatedText::setAnimationType(AnimationType animationType) {
 		m_animationType = animationType;
