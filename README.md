@@ -2,7 +2,7 @@
 
 This is a rebooted version of the original [The Followers](https://github.com/Rosme/the-followers)
 
-It will basically the same game, with a few additions. The purpose of this exercice is to put in application what I have learned in the last few years, and finally put what I've been wanting to put in it. Oh, and fix the bugs that are present.
+It will be basically the same game, with a few additions. The purpose of this exercice is to put in application what I have learned in the last few years, and finally put what I've been wanting to put in it. Oh, and fix the bugs that are present.
 
 ### Dependancy
 
