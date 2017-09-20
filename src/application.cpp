@@ -15,7 +15,11 @@ Creative Commons, 444 Castro Street, Suite 900, Mountain View, California, 94041
 const sf::Time Application::MaximumTimePerFrame = sf::seconds(1.f / 60.f);
 
 Application::Application()
+#ifdef WIN32
 	: m_window(sf::VideoMode(840, 680, 32), "The Followers: Rebooted")
+#else
+    : m_window(sf::VideoMode(1920, 1080, 32), "The Followers: Rebooted")
+#endif
 	, m_dispatcher(Core::MessageDispatcher::Type::Async)
 	, m_stateStack(State::Context(m_window, m_dispatcher, m_fontHolder)) {
 	m_dispatcher.registerHandler("error.critical", *this);
@@ -48,6 +52,10 @@ void Application::run() {
 		}
 
 		draw();
+        
+        if(m_isClosing) {
+            m_window.close();
+        }
 	}
 }
 
@@ -62,7 +70,7 @@ void Application::onMessage(const Core::Message& message, const std::string& key
 	if(key == "game.close") {
 		RSM_LOG_INFO("Request for closing game...Closing game and window");
 		m_dispatcher.stop();
-		m_window.close();
+        m_isClosing = true;
 	}
 }
 

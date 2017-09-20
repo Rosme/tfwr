@@ -10,6 +10,11 @@ Creative Commons, 444 Castro Street, Suite 900, Mountain View, California, 94041
 
 namespace Core {
 
+    MessageDispatcher::AsyncImpl::AsyncImpl() {
+        m_running = false;
+    }
+
+    
 	void MessageDispatcher::AsyncImpl::registerHandler(const std::string& name, MessageHandler& handler) {
 		std::lock_guard<std::mutex> lock(m_mutex);
 		m_handlers.emplace(std::make_pair(name, &handler));

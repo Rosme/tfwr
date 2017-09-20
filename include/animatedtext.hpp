@@ -11,7 +11,7 @@ Creative Commons, 444 Castro Street, Suite 900, Mountain View, California, 94041
 
 #include <SFML/Graphics/Text.hpp>
 #include <SFML/System/Time.hpp>
-#include <thor/Time/Timer.hpp>
+#include <Thor/Time/Timer.hpp>
 #include <vector>
 
 namespace Gui {

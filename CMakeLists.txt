@@ -129,6 +129,7 @@ set(Game_Src
 	)
 
 add_executable(TFWR
+    MACOSX_BUNDLE
 	${Game_Src}
 	${Game_Inc}
 	${ImGui_Src}

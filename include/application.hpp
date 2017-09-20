@@ -37,4 +37,5 @@ private:
 	Core::MessageDispatcher m_dispatcher;
 	StateStack m_stateStack;
 	FontHolder m_fontHolder;
+    bool m_isClosing = false;
 };

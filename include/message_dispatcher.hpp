@@ -15,6 +15,7 @@ Creative Commons, 444 Castro Street, Suite 900, Mountain View, California, 94041
 #include <queue>
 #include <thread>
 #include <mutex>
+#include <atomic>
 
 namespace Core {
 
@@ -59,6 +60,7 @@ namespace Core {
 
 		struct AsyncImpl
 			: public Impl {
+            AsyncImpl();
 			virtual void registerHandler(const std::string& name, MessageHandler& handler) override;
 			virtual void unregisterHandler(const std::string& name, MessageHandler& handler) override;
 			virtual void pushMessage(const std::string& name, const Message& message) override;
@@ -68,7 +70,7 @@ namespace Core {
 
 			std::thread m_thread;
 			std::mutex m_mutex;
-			bool m_running = false;
+            std::atomic<bool> m_running;
 		};
 
 		struct SyncImpl
